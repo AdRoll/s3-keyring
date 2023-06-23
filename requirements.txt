@@ -27,5 +27,7 @@ configparser==3.5.0b2
 # Cli
 Click==5.1
 
+#Pinning reqs for 3.10+
+keyring==19.2.0
 # Improved debugger
 pdbpp
