@@ -23,7 +23,8 @@ Paver==1.2.1
 colorama==0.2.7
 ipython
 configparser==3.5.0b2
-keyring==19.2.0
+keyring==19.2.0;python_version>='3.0'
+keyring==9.1;python_version<'3.0'
 
 # Cli
 Click==5.1

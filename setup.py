@@ -220,6 +220,10 @@ python_version_specific_requires = []
 # the Python standard library, otherwise we install it as a separate package
 if sys.version_info < (2, 7) or (3, 0) <= sys.version_info < (3, 3):
     python_version_specific_requires.append('argparse')
+if (2, 7) <= sys.version_info < (3, 0):
+    python_version_specific_requires.append('keyring==9.1')
+elif sys.version_info >= (3, 0):
+    python_version_specific_requires.append('keyring==19.2.0')
 
 
 # See here for more options:
@@ -257,7 +261,6 @@ setup_dict = dict(
     package_data = {'': ['*.ini']},
     install_requires=[
         'click>=5.1',
-        'keyring==19.2.0',
         'boto3>=1.4.4',
         'awscli>=1.11.38',
         'botocore>=1.5.1',
