@@ -31,8 +31,8 @@ For Keyring Admins only: setting up the keyring
 
 If you are just a user of the keyring and someone else has set up the keyring
 for you then you can skip this section and go directly to ``For Keyring Users:
-accessing the keyring`` at the end of this README. Note that you will need
-administrator privileges in your AWS account to be able to set up a new keyring
+accessing the keyring`` at the end of this README. Note that you will need 
+administrator privileges in your AWS account to be able to set up a new keyring 
 as described below.
 
 
@@ -118,7 +118,7 @@ Your keyring administrator will provide you with the ``KMS Key ID``,
 ``Bucket`` and ``Namespace`` configuration options. Option ``AWS profile``
 allows you to specify the local `AWS CLI profile`_ you want to use to sign all
 requests sent to AWS when accessing the keyring. Most users will want to use
-the ``default`` profile.
+the ``default`` profile. 
 
 .. _AWS CLI profile: http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-multiple-profiles
 
@@ -130,7 +130,7 @@ custom AWS profile.
 
 
 You can configure the ``s3keyring`` module without user input by setting the
-following environment variables: ``KEYRING_BUCKET``, ``KEYRING_NAMESPACE``,
+following environment variables: ``KEYRING_BUCKET``, ``KEYRING_NAMESPACE``, 
 ``KEYRING_KMS_KEY_ID``, ``KEYRING_AWS_PROFILE``. If these environment variables
 are properly set then you can configure the ``s3keyring`` module with::
 
@@ -142,25 +142,25 @@ Configuration profiles
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use ``s3keyring`` to store (read) secrets in (from) more than one
-backend S3 keyring. A typical use case is creating different keyrings for
-different user groups that have different levels of trust. For instance your
+backend S3 keyring. A typical use case is creating different keyrings for 
+different user groups that have different levels of trust. For instance your 
 keyring administrator may have setup a S3 keyring that only IAM users with admin
-privileges can access. Using the bucket, KMS Key ID and namespace provided by
+privileges can access. Using the bucket, KMS Key ID and namespace provided by 
 your keyring admin you can configure a separate ``s3keyring`` profile to access
 that admins-only keyring::
 
     s3keyring --profile administrators configure
 
-Your keyring admin may have also setup a separate S3 keyring to store secrets
-that need to be accessed by EC2 instances that act as website workers in a
-project you are working on. To access that keyring you would configure a
+Your keyring admin may have also setup a separate S3 keyring to store secrets 
+that need to be accessed by EC2 instances that act as website workers in a 
+project you are working on. To access that keyring you would configure a 
 second ``s3keyring`` profile::
 
     s3keyring --profile website-workers configure
 
 Then, to store and retrieve secrets in the administrators keyring::
 
-    s3keyring --profile administrators set SERVICE ACCOUNT PASSWORD
+    s3keyring --profile administrators set SERVICE ACCOUNT PASSWORD 
     s3keyring --profile administrators get SERVICE ACCOUNT
 
 
@@ -171,7 +171,7 @@ And you could do the same for the ``website-workers`` keyring using option
 Custom configuration files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default `s3keyring` configuration is store in ``~/.s3keyring.ini``. However,
+By default `s3keyring` configuration is store in ``~/.s3keyring.ini``. However, 
 you can also tell s3keyring to use a custom configuration file. In the CLI::
 
     # Store the configuration in a custom config file
@@ -243,13 +243,13 @@ In my project root directory I run::
     s3keyring --config my_module/.s3keyring.ini configure
 
 I keep the generated ``.s3keyring.ini`` file as part of my project source code
-(i.e. under version control). Then I paste the the code below in
+(i.e. under version control). Then I paste the the code below in 
 ``my_module/__init__.py``::
 
     import os
     import inspect
     from s3keyring.s3 import S3Keyring
-
+    
     __module_dir__ = os.path.dirname(inspect.getfile(inspect.currentframe()))
     __s3keyring_config_file__ = os.path.join(__module_dir__, '.s3keyring.ini')
     keyring = S3Keyring(config_file=__s3keyring_config_file__)
@@ -258,7 +258,7 @@ I keep the generated ``.s3keyring.ini`` file as part of my project source code
 Then in my project code I store and retrieve secrets as follows::
 
     from my_module import keyring
-
+    
     keyring.set_password('service', 'username', '123456')
     assert keyring.get_password('service', 'username') == '123456'
 
