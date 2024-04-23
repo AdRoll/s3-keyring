@@ -27,7 +27,7 @@ To install the development version of this fork.
 
 
 For Keyring Admins only: setting up the keyring
-------------------------------------------
+-----------------------------------------------
 
 If you are just a user of the keyring and someone else has set up the keyring
 for you then you can skip this section and go directly to ``For Keyring Users:
