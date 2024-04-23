@@ -257,9 +257,9 @@ setup_dict = dict(
     package_data = {'': ['*.ini']},
     install_requires=[
         'click>=5.1',
-        'keyring==19.2.0',
+        'keyring==9.1;python_version<\'3\'',
+        'keyring==19.2.0;python_version>=\'3\'',
         'boto3>=1.4.4',
-        'awscli>=1.11.38',
         'botocore>=1.5.1',
         'configparser>=3.5.0b2,<5'
     ] + python_version_specific_requires,
