@@ -27,7 +27,7 @@ To install the development version of this fork.
 
 
 For Keyring Admins only: setting up the keyring
-------------------------------------------
+-----------------------------------------------
 
 If you are just a user of the keyring and someone else has set up the keyring
 for you then you can skip this section and go directly to ``For Keyring Users:
@@ -95,8 +95,12 @@ For Keyring users: how to access the keyring
 One-time configuration
 ~~~~~~~~~~~~~~~~~~~~~~
 
-If you haven't done so already, you will need to configure your local 
-installation of the AWS SDK by running::
+If you haven't done so already, you will need to configure your local
+installation of the AWS SDK.
+
+If you don't have it already, you'll need AWS CLI: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+
+Then run::
 
     aws configure
 
