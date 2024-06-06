@@ -218,9 +218,9 @@ allows for applications to pull down a single cache file instead of many
 individual passwords to speed up launch times::
 
   # Update cache
-  s3keyring build_cache
+  s3keyring build-cache
   # Retrieve cache
-  s3keyring get_cache
+  s3keyring get-cache
 
 
 .. _keyring module: https://pypi.python.org/pypi/keyring
