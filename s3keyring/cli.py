@@ -70,8 +70,8 @@ def delete(ctx, service, username):
 
 
 @main.command()
-@click.option('--strict/--no-strict', default=True)
-@click.option('--dry-run/--no-dry-run', default=False)
+@click.option('--strict/--no-strict', default=True, help="Whether to abort on first failure or to skip and move on instead")
+@click.option('--dry-run/--no-dry-run', default=False, help="Only collect secrets without uploading cache file")
 @click.pass_context
 def build_cache(ctx, strict, dry_run):
     """Builds cache for a namespace"""
