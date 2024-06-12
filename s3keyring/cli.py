@@ -70,12 +70,10 @@ def delete(ctx, service, username):
 
 
 @main.command()
-@click.option('--strict/--no-strict', default=True)
-@click.option('--dry-run/--no-dry-run', default=False)
 @click.pass_context
-def build_cache(ctx, strict, dry_run):
+def build_cache(ctx):
     """Builds cache for a namespace"""
-    click.echo(ctx.obj['keyring'].build_cache(strict=strict, dry_run=dry_run))
+    click.echo(ctx.obj['keyring'].build_cache())
 
 
 @main.command()
