@@ -329,18 +329,26 @@ class S3Keyring(S3Backed, KeyringBackend):
             service = key_data[1]
             username = key_data[2]
 
+            has_errors = False
+
             # Fetch the secret
             try:
                 password = self.get_password(service, username)
             except Exception as e:
+                has_errors = True
                 print('Failed to add key "' + obj.key + '" to cache:')
                 print(e)
+                continue
 
             # Add to the cache
             cache[service][username] = password
 
         # write the cache file to S3
         key = CACHE_KEY.format(self.namespace)
+
+        if has_errors:
+            raise Exception("Unable to fetch some secrets, refusing to update {}".format(key))
+
         json_contents = json.dumps(cache)
         self.bucket.Object(key).put(ACL='private', Body=json_contents,
                                     ServerSideEncryption='aws:kms',
