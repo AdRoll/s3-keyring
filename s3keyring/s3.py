@@ -313,7 +313,7 @@ class S3Keyring(S3Backed, KeyringBackend):
             print("WARNING: {}/{} not found in OS keyring".format(
                 service, username))
 
-    def build_cache(self):
+    def build_cache(self, strict=False):
         """Builds the cache file for the namespace"""
         cache = defaultdict(dict)
 
@@ -346,7 +346,7 @@ class S3Keyring(S3Backed, KeyringBackend):
         # write the cache file to S3
         key = CACHE_KEY.format(self.namespace)
 
-        if has_errors:
+        if has_errors and strict:
             raise Exception("Unable to fetch some secrets, refusing to update {}".format(key))
 
         json_contents = json.dumps(cache)
