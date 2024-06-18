@@ -256,7 +256,7 @@ setup_dict = dict(
     # Include the s3keyring.ini file in the package root dir
     package_data = {'': ['*.ini']},
     install_requires=[
-        'click>=5.1',
+        'click>=7,<9',
         'keyring==9.1;python_version<\'3\'',
         'keyring==19.2.0;python_version>=\'3\'',
         'boto3>=1.4.4',
