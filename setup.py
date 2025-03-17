@@ -3,11 +3,16 @@ from __future__ import print_function
 
 import os
 import sys
-import imp
+if sys.version_info[0] == 2:
+    import imp
+    from distutils import spawn
+else:
+    import shutil
+    import importlib.machinery
+    import importlib.util
 import subprocess
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
-from distutils import spawn
 
 
 # Python 2.6 subprocess.check_output compatibility. Thanks Greg Hewgill!
@@ -40,6 +45,35 @@ DOCS_DIRECTORY = 'docs'
 TESTS_DIRECTORY = 'tests'
 PYTEST_FLAGS = ['--doctest-modules']
 
+def find_executable(executable):
+    """Find an executable in the PATH.
+
+    :param executable: the executable to find
+    :type executable: :class:`str`
+    :
+    :return: the path to the executable
+    :rtype: :class:`str`
+    """
+    if sys.version_info[0] == 2:
+        return spawn.find_executable(executable)
+    else:
+        return shutil.which(executable)
+
+
+# https://docs.python.org/3/whatsnew/3.12.html#:~:text=Replace%20imp.load_source()%20with%3A
+def load_source(modname, filename):
+    if sys.version_info[0] == 2:
+        return imp.load_source(modname, filename)
+    else:
+        loader = importlib.machinery.SourceFileLoader(modname, filename)
+        spec = importlib.util.spec_from_file_location(modname, filename, loader=loader)
+        module = importlib.util.module_from_spec(spec)
+        # The module is always executed and not cached in sys.modules.
+        # Uncomment the following line to cache the module.
+        # sys.modules[module.__name__] = module
+        loader.exec_module(module)
+        return module
+
 # Import metadata. Normally this would just be:
 #
 #     from s3keyring import metadata
@@ -51,8 +85,7 @@ PYTEST_FLAGS = ['--doctest-modules']
 # instead, effectively side-stepping the dependency problem. Please make sure
 # metadata has no dependencies, otherwise they will need to be added to
 # the setup_requires keyword.
-metadata = imp.load_source(
-    'metadata', os.path.join(CODE_DIRECTORY, 'metadata.py'))
+metadata = load_source('metadata', os.path.join(CODE_DIRECTORY, 'metadata.py'))
 
 
 # Miscellaneous helper functions
@@ -85,7 +118,7 @@ def is_git_project():
 
 
 def has_git():
-    return bool(spawn.find_executable("git"))
+    return bool(find_executable("git"))
 
 
 def get_git_project_files():
